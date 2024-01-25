@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "mpnv:block/prime_block"
+		}
+	}
+}

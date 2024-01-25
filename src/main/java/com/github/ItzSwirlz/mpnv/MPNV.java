@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import static net.minecraft.server.command.CommandManager.*;
 
 public class MPNV implements ModInitializer {
+
 	public class CalculationResults {
 		public boolean isPrime = true;
 		public boolean isMersennePrime = false;
@@ -51,6 +52,8 @@ public class MPNV implements ModInitializer {
 
 	@Override
 	public void onInitialize(ModContainer mod) {
+		MPNVBlocks.registerBlocks();
+
 		// FIXME: this needs massive cleanup
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("mpnv2d")
 			.then(argument("operation", StringArgumentType.string())
@@ -61,6 +64,9 @@ public class MPNV implements ModInitializer {
 
 				for(int x = 0; x < radius; x++) {
 					CalculationResults calculationResultsX = new CalculationResults(x);
+
+					// We can either do if-for-if or for-for-if, but there would be a lot of ifs. 
+					// TODO: which is faster?
 					if(operation.equals("and")) {
 						for(int z = 0; z < radius; z++) {
 							CalculationResults calculationResultsZ = new CalculationResults(z);
